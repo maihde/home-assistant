@@ -16,6 +16,7 @@ from homeassistant.components.climate import (
     SUPPORT_OPERATION_MODE, SUPPORT_FAN_MODE, SUPPORT_AWAY_MODE)
 from homeassistant.const import (
     CONF_HOST, TEMP_FAHRENHEIT, ATTR_TEMPERATURE, PRECISION_HALVES)
+from homeassistant.components.sensor.radiotherm import CachedRadioThermostat
 import homeassistant.helpers.config_validation as cv
 
 REQUIREMENTS = ['radiotherm==1.3']
@@ -120,7 +121,7 @@ class RadioThermostat(ClimateDevice):
 
     def __init__(self, device, hold_temp, away_temps):
         """Initialize the thermostat."""
-        self.device = device
+        self.device = CachedRadioThermostat(device)
         self._target_temperature = None
         self._current_temperature = None
         self._current_operation = STATE_IDLE
